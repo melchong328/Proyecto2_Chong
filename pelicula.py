@@ -14,10 +14,6 @@ class Pelicula:
     def nombre(self, nombre):
         self.__nombre = nombre
 
-# Método para mostrar la información de la película
-    def mostrar_info(self):
-        print(f'Película: {self.__nombre}, Director: {self.director}, Año: {self.año}, Duración: {self.__duracion}, Género: {self.genero}')
-
 class CatalogoPelicula:
 
     def __init__(self, nombre):

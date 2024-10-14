@@ -1,38 +1,65 @@
 from pelicula import *
 
-opcion = None
+def obtener_opcion_valida():
+    while True:
+        try:
+            opcion = int(input('Escriba una opción del menú (del 1 al 4): '))
+            if 1 <= opcion <= 4:
+                return opcion
+            else:
+                print("Por favor, ingrese un número entre 1 y 4.")
+        except ValueError:
+            print('Por favor, ingrese un número válido.')
+
 
 nombre_catalogo = input('Ingrese el nombre del catálogo: \n')
 # Creación del objeto 
 catalogo = CatalogoPelicula(nombre_catalogo)
 
-while opcion != 4:
-    try:
+while True:
         print("\nOpciones: ")
         print("1. Agregar película")
         print("2. Listar película")
         print("3. Eliminar catálogo de películas")
         print("4. SALIR\n")
 
-        opcion = int(input('Escriba una opción del menú (del 1 al 4): '))
-
+        opcion = obtener_opcion_valida()
+        
         if opcion == 1:
-            nombre_pelicula = input('Escribe el nombre de la película:')
-            if nombre_pelicula == "":
-                print('Error, por favor escribe bien el nombre de la película.')
-            pelicula  = Pelicula(nombre_pelicula)
-            catalogo.agregar_pelicula(pelicula)
+            nombre_pelicula = input('escribe bien el nombre de la película: ').strip()
+            if nombre_pelicula:
+                pelicula = Pelicula(nombre_pelicula)
+                try:
+                    catalogo.agregar_pelicula(pelicula)
+                    print(f"Película '{nombre_pelicula} agregada al catálogo")
+                except Exception as e:
+                    print(f'Error al agregar la película: {e}')
+            else:
+                print('Error: El nombre de la película no puede estar vacío.')
 
         elif opcion == 2:
-            catalogo.listar_peliculas()
+            try: 
+                catalogo.listar_peliculas()
+            except FileNotFoundError:
+                print("Error: El archivo del catálogo no existe. Agregar películas primero.")
+            except Exception as e:
+                print(f'Error al listar las películas: {e}')
 
         elif opcion == 3:
-            catalogo.eliminar_catalogo
+            confirmacion = input('¿Estas seguro de que quieres eliminar el catálogo? (s/n): ').lower()
+            if confirmacion == 's':
+                try:
+                    catalogo.eliminar_catalogo()
+                    print('Catálogo eliminado.')
+                except FileNotFoundError:
+                        print('Error: El archivo del catálogo no existe.')
+                except Exception as e:
+                        print(f'Error al eliminar el catálogo: {e}')
+            else:
+                print('Operación de eliminación cancelada.')
 
-    except Exception as e:
-        print('\n¡Ocurrio un error!', e, "\n")
-        opcion = None
-else: 
-    print('Programa finalizado')
+        elif opcion == 4:
+            print('Saliendo del programa. ¡Hasta luego!')
+            break 
 
-
+        input('\nPresione Enter para continuar.')
