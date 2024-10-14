@@ -25,6 +25,7 @@ while True:
 
         opcion = obtener_opcion_valida()
         
+        # OPCIÓN 1: Agregar película.
         if opcion == 1:
             nombre_pelicula = input('Escribe el nombre de la película: ').strip()
             if nombre_pelicula:
@@ -37,6 +38,7 @@ while True:
             else:
                 print('Error: El nombre de la película no puede estar vacío.')
 
+        # OPCIÓN 2: Listar película.
         elif opcion == 2:
             try: 
                 catalogo.listar_peliculas()
@@ -45,6 +47,7 @@ while True:
             except Exception as e:
                 print(f'Error al listar las películas: {e}')
 
+        # OPCIÓN 3: Eliminar catálogo de películas.
         elif opcion == 3:
             confirmacion = input('¿Estas seguro de que quieres eliminar el catálogo? (s/n): ').lower()
             if confirmacion == 's':
@@ -58,8 +61,9 @@ while True:
             else:
                 print('Operación de eliminación cancelada.')
 
+        # OPCIÓN 4: SALIR
         elif opcion == 4:
-            print('Saliendo del programa. ¡Hasta luego!')
+            print('Saliendo del programa. ¡Hasta luego!') # Mensaje de despedida.
             break 
 
         input('\nPresione Enter para continuar.')
