@@ -26,7 +26,7 @@ while True:
         opcion = obtener_opcion_valida()
         
         if opcion == 1:
-            nombre_pelicula = input('escribe bien el nombre de la película: ').strip()
+            nombre_pelicula = input('Escribe el nombre de la película: ').strip()
             if nombre_pelicula:
                 pelicula = Pelicula(nombre_pelicula)
                 try:
