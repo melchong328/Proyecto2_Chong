@@ -1,65 +1,38 @@
-import os # Importamos modulo
-from pelicula import Pelicula
+from pelicula import *
 
-class CatalogoPeliculas:
-    def __init__(self, nombre_catalogo):
-        # Atributos de clase
-        self.nombre = nombre_catalogo
-        self.ruta_archivo = f"{nombre_catalogo}.txt"
+opcion = None
 
+nombre_catalogo = input('Ingrese el nombre del catálogo: \n')
+# Creación del objeto 
+catalogo = CatalogoPelicula(nombre_catalogo)
 
-# Método agregar(): Para agregar películas al archivo. 
-    def agregar(self, pelicula):
-        try: #  try-except para manejar errores.
-            with open(self.ruta_archivo, 'a') as archivo:
-                archivo.write(f'{pelicula.get_nombre()}\n')
-            print(f"Película '{pelicula.get_nombre()}' agregada al catálogo.")
-        except IOError:
-            print(f"Error al agregar la película al catálogo '{self.nombre}'.")
-        
-# Método listar():  Para leer y mostrar las películas. 
-    def listar(self):
-        if not os.path.exists(self.ruta_archivo): 
-            print(f"El catálogo '{self.nombre}' está vacío.")
-            return
-        
-        try: #  try-except para manejar errores.
-            with open(self.ruta_archivo, 'r') as archivo:
-                peliculas = archivo.readlines()
-                if not peliculas:
-                    print(f"'El catálogo '{self.nombre}' está vacío.")
-                else:
-                    print(f"Películas en el catálogo '{self.nombre}':")
-                    for pelicula in peliculas:
-                        print(f"- {pelicula.strip()}")
-        except IOError:
-            print(f"Error al leer el catálogo '{self.nombre}'.")
+while opcion != 4:
+    try:
+        print("\nOpciones: ")
+        print("1. Agregar película")
+        print("2. Listar película")
+        print("3. Eliminar catálogo de películas")
+        print("4. SALIR\n")
 
-# Método eliminar(): Para borrar el archivo del catálogo.
-    def eliminar(self):
-        try: #  try-except para manejar errores.
-            os.remove(self.ruta_archivo)
-            print(f"Catálogo '{self.nombre}' eliminado.")
-        except FileNotFoundError:
-            print(f"El catálogo '{self.nombre}' no existe.")
-        except IOError:
-            print(f"Error al eliminar el catálogo '{self.nombre}'.")
+        opcion = int(input('Escriba una opción del menú (del 1 al 4): '))
 
-menu = '''
-        CATÁLOGO DE PELÍCULAS
-        ***** OPCIONES *****
-    ============================
+        if opcion == 1:
+            nombre_pelicula = input('Escribe el nombre de la película:')
+            if nombre_pelicula == "":
+                print('Error, por favor escribe bien el nombre de la película.')
+            pelicula  = Pelicula(nombre_pelicula)
+            catalogo.agregar_pelicula(pelicula)
 
-    [1] Agregar película
-    [2] Listar películas
-    [3] Eliminar catálogo
-    [4] Salir
+        elif opcion == 2:
+            catalogo.listar_peliculas()
 
-    ============================
+        elif opcion == 3:
+            catalogo.eliminar_catalogo
 
-        Selecciona una opción o presiona 'q' para salir
-'''
-
-print(menu)
+    except Exception as e:
+        print('\n¡Ocurrio un error!', e, "\n")
+        opcion = None
+else: 
+    print('Programa finalizado')
 
 
